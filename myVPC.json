@@ -155,8 +155,8 @@
 			"Properties": {
 				"CidrBlock": {"Ref": "pVpcCidr"},
 				"InstanceTenancy": "default",
-				"EnableDnsSupport": "false",
-				"EnableDnsHostnames": "false",
+				"EnableDnsSupport": "true",              
+				"EnableDnsHostnames": "true",
 				"Tags": [
 					{"Key": "Name", "Value": {"Ref": "pVpcName"}},
 					{"Key": {"Ref": "pResourceTagName"}, "Value": {"Ref": "pResourceTagValue"}}
@@ -231,7 +231,6 @@
 		},
 		"rInternalSubnetAZ2": {
 			"Type": "AWS::EC2::Subnet",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"VpcId": {"Ref": "VPC"},
 				"CidrBlock": {"Ref": "pInternalSubnetAZ2Cidr"},
@@ -245,7 +244,6 @@
 		},
 		"rInternalSubnetAZ3": {
 			"Type": "AWS::EC2::Subnet",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"VpcId": {"Ref": "VPC"},
 				"CidrBlock": {"Ref": "pInternalSubnetAZ3Cidr"},
@@ -259,7 +257,6 @@
 		},
 		"rExternalRoutingTableAZ1": {
 			"Type": "AWS::EC2::RouteTable",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"VpcId": {"Ref": "VPC"},
 				"Tags": [ 
@@ -270,7 +267,6 @@
 		},
 		"rExternalRoutingTableAZ2": {
 			"Type": "AWS::EC2::RouteTable",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"VpcId": {"Ref": "VPC"},
 				"Tags": [ 
@@ -281,7 +277,6 @@
 		},
 		"rExternalRoutingTableAZ3": {
 			"Type": "AWS::EC2::RouteTable",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"VpcId": {"Ref": "VPC"},
 				"Tags": [ 
@@ -292,7 +287,6 @@
 		},
 		"rExternalRoutingTableRouteAZ1": {
 			"Type": "AWS::EC2::Route",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"DestinationCidrBlock": "0.0.0.0/0",
 				"RouteTableId": {"Ref": "rExternalRoutingTableAZ1"},
@@ -301,7 +295,6 @@
 		},		
 		"rExternalRoutingTableRouteAZ2": {
 			"Type": "AWS::EC2::Route",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"DestinationCidrBlock": "0.0.0.0/0",
 				"RouteTableId": {"Ref": "rExternalRoutingTableAZ2"},
@@ -310,7 +303,6 @@
 		},		
 		"rExternalRoutingTableRouteAZ3": {
 			"Type": "AWS::EC2::Route",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"DestinationCidrBlock": "0.0.0.0/0",
 				"RouteTableId": {"Ref": "rExternalRoutingTableAZ3"},
@@ -319,7 +311,6 @@
 		},
 		"rExternalSubnetAZ1RouteTableAssociation": {
 			"Type": "AWS::EC2::SubnetRouteTableAssociation",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"SubnetId": {"Ref": "rExternalSubnetAZ1"},
 				"RouteTableId": {"Ref": "rExternalRoutingTableAZ1"}
@@ -327,7 +318,6 @@
 		},
 		"rExternalSubnetAZ2RouteTableAssociation": {
 			"Type": "AWS::EC2::SubnetRouteTableAssociation",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"SubnetId": {"Ref": "rExternalSubnetAZ2"},
 				"RouteTableId": {"Ref": "rExternalRoutingTableAZ2"}
@@ -335,7 +325,6 @@
 		},
 		"rExternalSubnetAZ3RouteTableAssociation": {
 			"Type": "AWS::EC2::SubnetRouteTableAssociation",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"SubnetId": {"Ref": "rExternalSubnetAZ3"},
 				"RouteTableId": {"Ref": "rExternalRoutingTableAZ3"}
@@ -343,7 +332,6 @@
 		},
 		"rInternalRoutingTableAZ1": {
 			"Type": "AWS::EC2::RouteTable",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"VpcId": {"Ref": "VPC"},
 				"Tags": [ 
@@ -354,7 +342,6 @@
 		},
 		"rInternalRoutingTableAZ2": {
 			"Type": "AWS::EC2::RouteTable",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"VpcId": {"Ref": "VPC"},
 				"Tags": [ 
@@ -365,7 +352,6 @@
 		},
 		"rInternalRoutingTableAZ3": {
 			"Type": "AWS::EC2::RouteTable",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"VpcId": {"Ref": "VPC"},
 				"Tags": [ 
@@ -376,7 +362,6 @@
 		},
 		"rInternalRoutingTableRouteAZ1": {
 			"Type": "AWS::EC2::Route",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"DestinationCidrBlock": "0.0.0.0/0",
 				"RouteTableId": {"Ref": "rInternalRoutingTableAZ1"},
@@ -385,7 +370,6 @@
 		},		
 		"rInternalRoutingTableRouteAZ2": {
 			"Type": "AWS::EC2::Route",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"DestinationCidrBlock": "0.0.0.0/0",
 				"RouteTableId": {"Ref": "rInternalRoutingTableAZ2"},
@@ -394,7 +378,6 @@
 		},
 		"rInternalRoutingTableRouteAZ3": {
 			"Type": "AWS::EC2::Route",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"DestinationCidrBlock": "0.0.0.0/0",
 				"RouteTableId": {"Ref": "rInternalRoutingTableAZ3"},
@@ -403,7 +386,6 @@
 		},
 		"rInternalSubnetAZ1RouteTableAssociation": {
 			"Type": "AWS::EC2::SubnetRouteTableAssociation",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"SubnetId": {"Ref": "rInternalSubnetAZ1"},
 				"RouteTableId": {"Ref": "rInternalRoutingTableAZ1"}
@@ -411,7 +393,6 @@
 		},
 		"rInternalSubnetAZ2RouteTableAssociation": {
 			"Type": "AWS::EC2::SubnetRouteTableAssociation",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"SubnetId": {"Ref": "rInternalSubnetAZ2"},
 				"RouteTableId": {"Ref": "rInternalRoutingTableAZ2"}
@@ -419,7 +400,6 @@
 		},
 		"rInternalSubnetAZ3RouteTableAssociation": {
 			"Type": "AWS::EC2::SubnetRouteTableAssociation",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"SubnetId": {"Ref": "rInternalSubnetAZ3"},
 				"RouteTableId": {"Ref": "rInternalRoutingTableAZ3"}
@@ -469,7 +449,6 @@
 		},
 		"rExternalSubnetAcl": {
 			"Type": "AWS::EC2::NetworkAcl",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"VpcId": {"Ref": "VPC"},
 				"Tags": [ {"Key": "Name", "Value": "External Network ACL"} ]
@@ -477,7 +456,6 @@
 		},
 		"rInternalSubnetAcl": {
 			"Type": "AWS::EC2::NetworkAcl",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"VpcId": {"Ref": "VPC"},
 				"Tags": [ {"Key": "Name", "Value": "Internal Network ACL"} ]
@@ -485,7 +463,6 @@
 		},
 		"rExternalInSubnetAclEntry": {
 			"Type": "AWS::EC2::NetworkAclEntry",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"NetworkAclId": {"Ref": "rExternalSubnetAcl"},
 				"RuleNumber": "100",
@@ -499,7 +476,6 @@
 		},
 		"rExternalOutSubnetAclEntry": {
 			"Type": "AWS::EC2::NetworkAclEntry",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"NetworkAclId": {"Ref": "rExternalSubnetAcl"},
 				"RuleNumber": "100",
@@ -513,7 +489,6 @@
 		},
 		"rInternalInSubnetAclEntry": {
 			"Type": "AWS::EC2::NetworkAclEntry",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"NetworkAclId": {"Ref": "rInternalSubnetAcl"},
 				"RuleNumber": "100",
@@ -527,7 +502,6 @@
 		},
 		"rInternalOutSubnetAclEntry": {
 			"Type": "AWS::EC2::NetworkAclEntry",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"NetworkAclId": {"Ref": "rInternalSubnetAcl"},
 				"RuleNumber": "100",
@@ -541,7 +515,6 @@
 		},
 		"rExternalSubnetAZ1AclAssociation": {
 			"Type": "AWS::EC2::SubnetNetworkAclAssociation",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"SubnetId": {"Ref": "rExternalSubnetAZ1"},
 				"NetworkAclId": {"Ref": "rExternalSubnetAcl"}
@@ -549,7 +522,6 @@
 		},
 		"rExternalSubnetAZ2AclAssociation": {
 			"Type": "AWS::EC2::SubnetNetworkAclAssociation",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"SubnetId": {"Ref": "rExternalSubnetAZ2"},
 				"NetworkAclId": {"Ref": "rExternalSubnetAcl"}
@@ -557,7 +529,6 @@
 		},
 		"rExternalSubnetAZ3AclAssociation": {
 			"Type": "AWS::EC2::SubnetNetworkAclAssociation",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"SubnetId": {"Ref": "rExternalSubnetAZ3"},
 				"NetworkAclId": {"Ref": "rExternalSubnetAcl"}
@@ -565,7 +536,6 @@
 		},		
 		"rInternalSubnetAZ1AclAssociation": {
 			"Type": "AWS::EC2::SubnetNetworkAclAssociation",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"SubnetId": {"Ref": "rInternalSubnetAZ1"},
 				"NetworkAclId": {"Ref": "rInternalSubnetAcl"}
@@ -573,7 +543,6 @@
 		},
 		"rInternalSubnetAZ2AclAssociation": {
 			"Type": "AWS::EC2::SubnetNetworkAclAssociation",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"SubnetId": {"Ref": "rInternalSubnetAZ2"},
 				"NetworkAclId": {"Ref": "rInternalSubnetAcl"}
@@ -581,7 +550,6 @@
 		},
 		"rInternalSubnetAZ3AclAssociation": {
 			"Type": "AWS::EC2::SubnetNetworkAclAssociation",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"SubnetId": {"Ref": "rInternalSubnetAZ3"},
 				"NetworkAclId": {"Ref": "rInternalSubnetAcl"}
@@ -619,7 +587,6 @@
 		},
 		"rWebSecurityGroup": {
 			"Type": "AWS::EC2::SecurityGroup",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"GroupDescription": "Web Server Security Group",
 				"VpcId": {"Ref": "VPC"},		
@@ -640,7 +607,6 @@
 		},		
 		"rInternalSecurityGroup": {
 			"Type": "AWS::EC2::SecurityGroup",
-			"DeletionPolicy": "Retain",
 			"Properties": {
 				"GroupDescription": "Internal Security Group",
 				"VpcId": {"Ref": "VPC"},
@@ -677,7 +643,7 @@
          },
 				"InstanceType" : "t2.small",
 				"KeyName" : {"Ref":"pPrivateKeyPair"},
-        "SecurityGroupIds": [{"Ref" : "rMgmtSecurityGroup"}],
+        "SecurityGroupIds": [{"Ref" : "rMgmtSecurityGroup"},{"Ref" : "rWebSecurityGroup"}],
 				"SubnetId" : {"Ref":"rExternalSubnetAZ1"},
 				"Tags": [
 					{"Key": "Name", "Value": "WindowsJumpBox"}
