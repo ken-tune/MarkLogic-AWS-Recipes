@@ -76,15 +76,18 @@
 		},		
 		"pAvailabilityZone1": {
 			"Description": "First Availability Zone",
-			"Type": "AWS::EC2::AvailabilityZone::Name"
+			"Type": "AWS::EC2::AvailabilityZone::Name",
+			"Default":"us-east-1a"
 		},
 		"pAvailabilityZone2": {
 			"Description": "Second Availability Zone",
-			"Type": "AWS::EC2::AvailabilityZone::Name"
+			"Type": "AWS::EC2::AvailabilityZone::Name",
+			"Default":"us-east-1b"			
 		},
 		"pAvailabilityZone3": {
 			"Description": "Third Availability Zone",
-			"Type": "AWS::EC2::AvailabilityZone::Name"
+			"Type": "AWS::EC2::AvailabilityZone::Name",
+			"Default":"us-east-1d"			
 		},
 		"pExternalSubnetAZ1Cidr": {
 			"Description": "External subnet CIDR range for First Availability Zone",
@@ -118,8 +121,7 @@
 		},
 		"pPrivateKeyPair": {
 			"Description": "Private Key Pair",
-			"Type": "String",
-			"Default": "Private Key Pair"
+			"Type": "AWS::EC2::KeyPair::KeyName"
 		},
 		"pResourceTagName": {
 			"Description": "Name of tag used for resources",
