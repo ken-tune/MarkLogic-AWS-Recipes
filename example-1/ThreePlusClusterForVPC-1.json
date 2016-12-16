@@ -948,7 +948,7 @@
         "ToPort": "8129"
       }
     },
-    "RootRole": {
+    "MarkLogicHostRole": {
         "Type": "AWS::IAM::Role",
         "Properties": {
             "AssumeRolePolicyDocument": {
@@ -966,11 +966,10 @@
                     }
                 ]
             },
-            "Path": "/",
-            "RoleName":"RootInstanceProfile"                            
+            "Path": "/"
         }
     },
-    "RolePolicies": {
+    "MarkLogicHostRolePolicies": {
         "Type": "AWS::IAM::Policy",
         "Properties": {
             "PolicyName": "root",
@@ -985,7 +984,7 @@
             },
             "Roles": [
                 {
-                    "Ref": "RootRole"
+                    "Ref": "MarkLogicHostRole"
                 }
             ]
         }
@@ -996,7 +995,7 @@
             "Path": "/",
             "Roles": [
                 {
-                    "Ref": "RootRole"
+                    "Ref": "MarkLogicHostRole"
                 }
             ]
         }
