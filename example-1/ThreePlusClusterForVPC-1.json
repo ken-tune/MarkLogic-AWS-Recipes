@@ -974,13 +974,60 @@
         "Properties": {
             "PolicyName": "root",
             "PolicyDocument": {
-                "Statement": [
-                    {
-                        "Effect": "Allow",
-                        "Action": "*",
-                        "Resource": "*"
-                    }
-                ]
+            "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "autoscaling:CreateAutoScalingGroup",
+                "autoscaling:CreateLaunchConfiguration",
+                "autoscaling:UpdateAutoScalingGroup",
+                "autoscaling:TerminateInstanceInAutoScalingGroup"
+              ],
+              "Resource": [
+                  "*"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "ec2:AttachVolume",
+                "ec2:CreateTags",
+                "ec2:DeleteTags",
+                "ec2:DescribeImages",
+                "ec2:DescribeInstances",
+                "ec2:DescribeVolumes"
+              ],
+              "Resource": [
+                  "*"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                  "sns:Publish"
+              ],
+              "Resource": [
+                  "*"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                  "dynamodb:*"
+              ],
+              "Resource": [
+                  "*"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                  "s3:*"
+              ],
+              "Resource": [
+                  "*"
+              ]
+            }]
             },
             "Roles": [
                 {
