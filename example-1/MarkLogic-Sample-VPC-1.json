@@ -185,7 +185,7 @@
 				"VpcId": {"Ref": "VPC"},
 				"CidrBlock": {"Ref": "pExternalSubnetAZ1Cidr"},
 				"AvailabilityZone": {"Ref": "pAvailabilityZone1"},
-				"MapPublicIpOnLaunch": "True",
+				"MapPublicIpOnLaunch": "False",
 				"Tags": [ 
 					{"Key": "Name", "Value": "External Subnet AZ1"},
 					{"Key": {"Ref": "pResourceTagName"}, "Value": {"Ref": "pResourceTagValue"}}
@@ -198,7 +198,7 @@
 				"VpcId": {"Ref": "VPC"},
 				"CidrBlock": {"Ref": "pExternalSubnetAZ2Cidr"},
 				"AvailabilityZone": {"Ref": "pAvailabilityZone2"},
-				"MapPublicIpOnLaunch": "True",
+				"MapPublicIpOnLaunch": "False",
 				"Tags": [ 
 					{"Key": "Name", "Value": "External Subnet AZ2"},
 					{"Key": {"Ref": "pResourceTagName"}, "Value": {"Ref": "pResourceTagValue"}}
@@ -211,7 +211,7 @@
 				"VpcId": {"Ref": "VPC"},
 				"CidrBlock": {"Ref": "pExternalSubnetAZ3Cidr"},
 				"AvailabilityZone": {"Ref": "pAvailabilityZone3"},
-				"MapPublicIpOnLaunch": "True",
+				"MapPublicIpOnLaunch": "False",
 				"Tags": [ 
 					{"Key": "Name", "Value": "External Subnet AZ3"},
 					{"Key": {"Ref": "pResourceTagName"}, "Value": {"Ref": "pResourceTagValue"}}
@@ -572,21 +572,6 @@
 				]
 			}
 		},
-		"rExternalSecurityGroup": {
-			"Type": "AWS::EC2::SecurityGroup",
-			"Properties": {
-				"GroupDescription": "External Security Group",
-				"VpcId": {"Ref": "VPC"},		
-				"Tags": [ 
-					{"Key": "Name", "Value": "External Security Group"} ,
-					{"Key": {"Ref": "pResourceTagName"}, "Value": {"Ref": "pResourceTagValue"}}
-				],
-				"SecurityGroupIngress": [ 
-					{"IpProtocol": "tcp", "FromPort": "80", "ToPort": "80", "CidrIp": "0.0.0.0/0"},
-					{"IpProtocol": "tcp", "FromPort": "443", "ToPort": "443", "CidrIp": "0.0.0.0/0"}
-				]
-			}
-		},
 		"rWebSecurityGroup": {
 			"Type": "AWS::EC2::SecurityGroup",
 			"Properties": {
@@ -598,10 +583,6 @@
 				],
 				"SecurityGroupIngress": [ 
 					{"IpProtocol": "tcp", "FromPort": "22", "ToPort": "22", "SourceSecurityGroupId": {"Ref": "rMgmtSecurityGroup"}},
-					{"IpProtocol": "tcp", "FromPort": "80", "ToPort": "80", "SourceSecurityGroupId": {"Ref": "rExternalSecurityGroup"}},
-					{"IpProtocol": "tcp", "FromPort": "443", "ToPort": "443", "SourceSecurityGroupId": {"Ref": "rExternalSecurityGroup"}}
-				],
-				"SecurityGroupEgress": [ 
 					{"IpProtocol": "tcp", "FromPort": "80", "ToPort": "80", "CidrIp": "0.0.0.0/0"},
 					{"IpProtocol": "tcp", "FromPort": "443", "ToPort": "443", "CidrIp": "0.0.0.0/0"}
 				]

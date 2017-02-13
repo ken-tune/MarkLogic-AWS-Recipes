@@ -16,6 +16,7 @@
       "Description": "Type of EC2 instance to launch",
       "Type": "String",
       "AllowedValues": [
+        "t2.small",
         "m3.medium",
         "m3.large",
         "m3.xlarge",
@@ -853,8 +854,8 @@
         ],
         "Listeners": [
           {
-            "LoadBalancerPort": "8129",
-            "InstancePort": "8129",
+            "LoadBalancerPort": "8044",
+            "InstancePort": "8044",
             "Protocol": "HTTP",
             "PolicyNames": [
               "MLSession"
@@ -944,8 +945,8 @@
         "SourceSecurityGroupId": {
           "Ref": "InstanceSecurityGroup"        
         },
-        "FromPort": "8129",
-        "ToPort": "8129"
+        "FromPort": "8044",
+        "ToPort": "8044"
       }
     },
     "MarkLogicHostRole": {

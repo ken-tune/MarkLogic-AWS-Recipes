@@ -1,0 +1,210 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Add web tier",
+  "Parameters":{
+    "InstanceType": {
+      "Description": "Type of EC2 instance to launch",
+      "Type": "String",
+      "AllowedValues": [
+        "t2.small",
+        "m3.medium",
+        "m3.large",
+        "m3.xlarge",
+        "m3.2xlarge",
+        "cc1.4xlarge"
+      ]
+    },  	
+		"KeyName": {
+			"Description": "Private Key Pair for webservers",
+			"Type": "AWS::EC2::KeyPair::KeyName"
+		},    
+    "NodesPerZone": {
+      "Description": "Total number of nodes per Zone. (3 zones).  Set to 0 to shutdown/hibernate",
+      "Type": "Number",
+      "MinValue": "0",
+      "MaxValue": "20",
+      "Default": "1"
+    },  	
+    "PublicSubnet1": {
+      "Description": "First public subnet for MarkLogic Cluster",
+      "Type": "AWS::EC2::Subnet::Id"
+    },
+    "PublicSubnet2": {
+      "Description": "Second public subnet for MarkLogic Cluster",
+      "Type": "AWS::EC2::Subnet::Id"
+    },
+    "PublicSubnet3": {
+      "Description": "Third public subnet for MarkLogic Cluster",
+      "Type": "AWS::EC2::Subnet::Id"
+    },    
+		"WebServerIAMRole":{
+			"Description" : "IAM role for web servers",
+      "Type": "String"
+		},   
+    "WebSecurityGroup":{
+    	"Description" : "Security group for web servers",
+			"Type": "String"    	
+    }
+  },
+	"Mappings" :{
+		"AMI" : {
+			"us-east-1":{"AWSLinux":"ami-b73b63a0","Windows2012Base":"ami-bfeddca8"},
+			"us-east-2":{"AWSLinux":"ami-58277d3d","Windows2012Base":"ami-e999c38c"},
+			"us-west-1":{"AWSLinux":"ami-23e8a343","Windows2012Base":"ami-8b590deb"},
+			"us-west-2":{"AWSLinux":"ami-5ec1673e","Windows2012Base":"ami-24e64944"},
+			"eu-west-1":{"AWSLinux":"ami-9398d3e0","Windows2012Base":"ami-95d984e6"},
+			"eu-west-2":{"AWSLinux":"ami-f9619996","Windows2012Base":"ami-21cb0f4e"},
+			"ap-northeast-1":{"AWSLinux":"ami-0c11b26d","Windows2012Base":"ami-5b299d3a"},
+			"ap-northeast-2":{"AWSLinux":"ami-983ce8f6","Windows2012Base":"ami-69d30407"},
+			"ap-southeast-1":{"AWSLinux":"ami-b953f2da","Windows2012Base":"ami-9d7ad8fe"},
+			"ap-southeast-2":{"AWSLinux":"ami-db704cb8","Windows2012Base":"ami-9fe7d9fc"},
+			"ap-south-1":{"AWSLinux":"ami-34b4c05b","Windows2012Base":"ami-79255216"},
+			"sa-east-1":{"AWSLinux":"ami-97831ffb","Windows2012Base":"ami-628e100e"}
+		}
+	},  
+  "Resources":{
+    "WebServerGroup1": {
+      "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "Properties": {
+        "VPCZoneIdentifier": [
+          {
+            "Ref": "PublicSubnet1"
+          }
+        ],
+        "LaunchConfigurationName": {
+          "Ref": "LaunchConfig"
+        },
+        "MinSize": "0",
+        "MaxSize": {
+          "Ref": "NodesPerZone"
+        },
+        "DesiredCapacity": {
+          "Ref": "NodesPerZone"
+        },
+        "Cooldown": "300",
+        "HealthCheckType": "EC2",
+        "HealthCheckGracePeriod": "300",
+        "LoadBalancerNames": [
+          {
+            "Ref": "ElasticLoadBalancer"
+          }
+        ]
+    	}
+    },
+    "WebServerGroup2": {
+      "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "Properties": {
+        "VPCZoneIdentifier": [
+          {
+            "Ref": "PublicSubnet2"
+          }
+        ],
+        "LaunchConfigurationName": {
+          "Ref": "LaunchConfig"
+        },
+        "MinSize": "0",
+        "MaxSize": {
+          "Ref": "NodesPerZone"
+        },
+        "DesiredCapacity": {
+          "Ref": "NodesPerZone"
+        },
+        "Cooldown": "300",
+        "HealthCheckType": "EC2",
+        "HealthCheckGracePeriod": "300",
+        "LoadBalancerNames": [
+          {
+            "Ref": "ElasticLoadBalancer"
+          }
+        ]
+      }
+    },
+    "WebServerGroup3": {
+      "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "Properties": {
+        "VPCZoneIdentifier": [
+          {
+            "Ref": "PublicSubnet3"
+          }
+        ],
+        "LaunchConfigurationName": {
+          "Ref": "LaunchConfig"
+        },
+        "MinSize": "0",
+        "MaxSize": {
+          "Ref": "NodesPerZone"
+        },
+        "DesiredCapacity": {
+          "Ref": "NodesPerZone"
+        },
+        "Cooldown": "300",
+        "HealthCheckType": "EC2",
+        "HealthCheckGracePeriod": "300",
+        "LoadBalancerNames": [
+          {
+            "Ref": "ElasticLoadBalancer"
+          }
+        ]
+      }
+    },    
+    "LaunchConfig": {
+      "Type": "AWS::AutoScaling::LaunchConfiguration",
+      "Properties": {
+        "KeyName": {
+          "Ref": "KeyName"
+        },
+        "ImageId": {
+          "Fn::FindInMap": ["AMI",{"Ref": "AWS::Region"},"AWSLinux"]        	
+        },
+        "SecurityGroups": [
+          {
+            "Ref" : "WebSecurityGroup"
+          }
+        ],
+        "InstanceType": {
+          "Ref": "InstanceType"
+        },
+        "IamInstanceProfile": {
+          "Ref": "WebServerIAMRole"
+        }
+      }
+    },
+    "ElasticLoadBalancer": {
+      "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+      "Properties": {
+        "ConnectionDrainingPolicy": {
+          "Enabled": "true",
+          "Timeout": "60"
+        },
+        "CrossZone": "true",
+        "Scheme": "internet-facing",
+        "Subnets": [
+          {
+            "Ref": "PublicSubnet1",
+            "Ref": "PublicSubnet2",
+            "Ref": "PublicSubnet3"                        
+          }
+        ],
+        "Listeners": [
+          {
+            "LoadBalancerPort": "80",
+            "InstancePort": "80",
+            "Protocol": "HTTP"
+          }
+        ],
+        "HealthCheck": {
+          "Target": "HTTP:80/",
+          "HealthyThreshold": "3",
+          "UnhealthyThreshold": "5",
+          "Interval": "10",
+          "Timeout": "5"
+        },
+        "SecurityGroups":[
+          {
+            "Ref" : "WebSecurityGroup"          
+          }        
+        ]
+      }
+    }
+  }
+}
